@@ -50,7 +50,8 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1
+				1,
+				2
 			]
 		}
 	],
@@ -84,13 +85,7 @@
 			"sourceIndexes" : 
 			[
 				0,
-				1
-			]
-		},
-		{
-			"name" : "Header Files",
-			"sourceIndexes" : 
-			[
+				1,
 				2
 			]
 		}
@@ -100,19 +95,20 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "main.c",
+			"path" : "gettftp.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "tftp.c",
+			"path" : "puttftp.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "tftp.h",
-			"sourceGroupIndex" : 1
+			"compileGroupIndex" : 0,
+			"path" : "Q4b.c",
+			"sourceGroupIndex" : 0
 		}
 	],
 	"type" : "EXECUTABLE"

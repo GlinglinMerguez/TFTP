@@ -5,4 +5,5 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(TP_Prog_Sys2 gettftp.c
         puttftp.c
+        Q4b.c
 )

@@ -58,6 +58,9 @@ void main(int argc, char** argv) {
         rrq_buffer[2 + strlen(argv[3]) + 1 + strlen(RRQ_MODE)] = 0;  // Null-terminate the mode
         int rrq_length = 2 + strlen(argv[3]) + 1 + strlen(RRQ_MODE) + 1;
 
+        write(STDOUT_FILENO, rrq_buffer, rrq_length);
+        write(STDOUT_FILENO, "\n", 1);
+
         // Send the RRQ packet
         if (sendto(sockfd, rrq_buffer, rrq_length, 0, res->ai_addr, res->ai_addrlen) == -1) {
             perror(SEND_ERROR);
@@ -68,43 +71,31 @@ void main(int argc, char** argv) {
 
         // Q4b - Receive Data
         char data_buffer[MAX_BUFFER_SIZE];
-        int block_number = 1;  // Initial block number
         socklen_t server_addr_len = sizeof(struct sockaddr);
-
-        // Q4c - Multiple Packets
-        while(1) {
-            ssize_t recv_length = recvfrom(sockfd, data_buffer, MAX_BUFFER_SIZE, 0, res->ai_addr, &server_addr_len);
-            if (recv_length == -1) {
-                perror(RECEIVE_ERROR);
-                close(sockfd);
-                freeaddrinfo(res);
-                exit(EXIT_FAILURE);
-            }
-
-            if (data_buffer[1] == DATA_OPCODE) {
-                int received_block_number = (data_buffer[2] << 8) | data_buffer[3];
-
-                if (received_block_number == block_number) {
-                    // Ack
-                    char ack_buffer[4] = {0x00, ACK_OPCODE, data_buffer[2], data_buffer[3]};
-                    if (sendto(sockfd, ack_buffer, 4, 0, res->ai_addr, res->ai_addrlen) == -1) {
-                        perror(SEND_ERROR);
-                        close(sockfd);
-                        freeaddrinfo(res);
-                        exit(EXIT_FAILURE);
-                    }
-                    // Print Data
-                    write(STDOUT_FILENO, data_buffer + 4, recv_length - 4);
-
-                    block_number++;
-
-                    // Check if it's the last data block
-                    if (recv_length < MAX_BUFFER_SIZE) {
-                        break;
-                    }
-                }
-            }
+        ssize_t recv_length = recvfrom(sockfd, data_buffer, MAX_BUFFER_SIZE, 0, res->ai_addr, &server_addr_len);
+        if (recv_length == -1) {
+            perror(RECEIVE_ERROR);
+            close(sockfd);
+            freeaddrinfo(res);
+            exit(EXIT_FAILURE);
         }
+
+        // Re-sending the Block number to Acknowledge
+        char block[MAX_BUFFER_SIZE];
+        block[0] = 0x00;
+        block[1] = 0x04;
+        memcpy(block, data_buffer + 2, 2);  // Getting the Block number
+        if (sendto(sockfd, block, 4, 0, res->ai_addr, res->ai_addrlen) == -1) {
+            perror(SEND_ERROR);
+            close(sockfd);
+            freeaddrinfo(res);
+            exit(EXIT_FAILURE);
+        }
+
+        // Writing the Data into the shell
+        write(STDOUT_FILENO, data_buffer+4, strlen(data_buffer+4));
+
+        // Q4c -
 
         close(sockfd);
         freeaddrinfo(res);
