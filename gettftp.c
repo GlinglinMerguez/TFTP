@@ -25,6 +25,7 @@ void main(int argc, char** argv) {
     // Q1 - Argument count test
     if (argc != 4) {
         printf(ARGUMENTS_ERROR);
+        exit(EXIT_FAILURE);
     } else {
 
         // Q2 - Initialise the hints structure for getaddrinfo

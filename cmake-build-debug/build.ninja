@@ -61,12 +61,6 @@ build CMakeFiles/TP_Prog_Sys2.dir/puttftp.c.o: C_COMPILER__TP_Prog_Sys2_unscanne
   OBJECT_DIR = CMakeFiles/TP_Prog_Sys2.dir
   OBJECT_FILE_DIR = CMakeFiles/TP_Prog_Sys2.dir
 
-build CMakeFiles/TP_Prog_Sys2.dir/Q4b.c.o: C_COMPILER__TP_Prog_Sys2_unscanned_Debug /home/ensea/CLionProjects/TFTP/Q4b.c || cmake_object_order_depends_target_TP_Prog_Sys2
-  DEP_FILE = CMakeFiles/TP_Prog_Sys2.dir/Q4b.c.o.d
-  FLAGS = -g -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles/TP_Prog_Sys2.dir
-  OBJECT_FILE_DIR = CMakeFiles/TP_Prog_Sys2.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target TP_Prog_Sys2
@@ -75,7 +69,7 @@ build CMakeFiles/TP_Prog_Sys2.dir/Q4b.c.o: C_COMPILER__TP_Prog_Sys2_unscanned_De
 #############################################
 # Link the executable TP_Prog_Sys2
 
-build TP_Prog_Sys2: C_EXECUTABLE_LINKER__TP_Prog_Sys2_Debug CMakeFiles/TP_Prog_Sys2.dir/gettftp.c.o CMakeFiles/TP_Prog_Sys2.dir/puttftp.c.o CMakeFiles/TP_Prog_Sys2.dir/Q4b.c.o
+build TP_Prog_Sys2: C_EXECUTABLE_LINKER__TP_Prog_Sys2_Debug CMakeFiles/TP_Prog_Sys2.dir/gettftp.c.o CMakeFiles/TP_Prog_Sys2.dir/puttftp.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/TP_Prog_Sys2.dir
   POST_BUILD = :
