@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <fcntl.h>
 
 
 #define ARGUMENTS_ERROR "Error, you must specify 3 arguments."
@@ -69,11 +70,20 @@ void main(int argc, char** argv) {
         // Q4b - Receive Data
         char data_buffer[MAX_BUFFER_SIZE];
         int block_number = 1;  // Initial block number
-        socklen_t server_addr_len = sizeof(struct sockaddr);
 
         // Q4c - Multiple Packets
+        // Opening or Creating the File
+        int fd = open(argv[3], O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+        if (fd == -1) {
+            perror("Error opening file");
+            close(sockfd);
+            freeaddrinfo(res);
+            exit(EXIT_FAILURE);
+        }
+
+        // If there's still Data
         while(1) {
-            ssize_t recv_length = recvfrom(sockfd, data_buffer, MAX_BUFFER_SIZE, 0, res->ai_addr, &server_addr_len);
+            ssize_t recv_length = recvfrom(sockfd, data_buffer, MAX_BUFFER_SIZE, 0, res->ai_addr, &res->ai_addrlen);
             if (recv_length == -1) {
                 perror(RECEIVE_ERROR);
                 close(sockfd);
@@ -93,8 +103,13 @@ void main(int argc, char** argv) {
                         freeaddrinfo(res);
                         exit(EXIT_FAILURE);
                     }
-                    // Print Data
-                    write(STDOUT_FILENO, data_buffer + 4, recv_length - 4);
+
+                    // Write Data to File
+                    if (write(fd, data_buffer + 4, recv_length - 4) == -1) {
+                        perror("Error writing to file");
+                        close(fd);
+                        exit(EXIT_FAILURE);
+                    }
 
                     block_number++;
 
