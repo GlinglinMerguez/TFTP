@@ -2,7 +2,7 @@
 
 ## Contexte
 
-Le projet vise à créer un programme client capable d'échanger des fichiers en utilisant le protocole TFTP.
+Ce projet vise à créer un client capable d'échanger des fichiers en utilisant le protocole TFTP (Trivial File Transfer Protocol). Le client sera capable de télécharger des fichiers depuis un serveur TFTP distant.
 
 - Ce projet est développé par Léo APPOURCHAUX et Yumeng YE.
 - Le code est hébergé sur Github, avec un référentiel public
@@ -30,10 +30,10 @@ Le projet vise à créer un programme client capable d'échanger des fichiers en
 **Explication :**
 1) Construction et envoi de la requête
     - Le programme construit un paquet de requête de lecture (RRQ) formé avec l'opcode approprié et envoie ce paquet au serveur en utilisant la fonction "sendto". Le paquet contient le nom du fichier et le mode de transfert.
-2) Réception des données
-    - Le programme attend la réponse du serveur en utilisant la fonction "recvfrom" pour recevoir le paquet de données et son acquittement.
-    - Ensuite le programme envoie un acquittement ACK au serveur pour confirmer la réception du paquet de données.
-    - Enfin les données du fichier reçues du serveur sont écrites sur la sortie standard à l'aide de la fonction "write". Cette sortie standard est représentée par STDOUT_FILENO.
+2) Réception des données et écriture des données dans un fichier
+    - Le programme attend la réponse du serveur en utilisant la fonction "recvfrom" pour recevoir le paquet de données et son acquittement. Les données du fichier sont reçues du serveur sous forme de paquets.
+    - Ensuite les données reçues sont écrites dans un fichier. Le programme ouvre ou crée le fichier en utilisant les appels système (open). Les données sont ensuite écrites dans le fichier
+    - Un acquittement ACK est ensuite renvoyé au serveur pour confirmer la réception de chaque paquet.
 3) Gestion des erreurs et nettoyage
     - En cas d'erreur à n'importe quelle étape du processus, le programme affiche un message d'erreur, ferme le socket, libère la mémoire utilisée pour les informations d'adresse ("freeaddrinfo), et se termine.
 
