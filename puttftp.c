@@ -23,7 +23,7 @@ void main(int argc, char** argv) {
     // Address, Port, FileName, BlockSize
 
     // Argument count test
-    if (argc != 4) {
+    if (argc != 5) {
         printf(ARGUMENTS_ERROR);
         exit(EXIT_FAILURE);
     }
