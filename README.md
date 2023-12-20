@@ -48,4 +48,10 @@ Ce projet vise à créer un client capable d'échanger des fichiers en utilisant
 3) Gestion des erreurs et nettoyage
    - De même que celle de gettftp.
 
+### Question 6 : Utilisation de blocksize taille de blocksize ###
+
+**Explication:**
+- On modifie le code en prenant en compte la taille de bloc qui est passée en tant qu'argument de ligne de commande (argv[4]).
+- Les paquets RRQ et WRQ sont désormais construits avec la taille de bloc, permettant une personnalisation de la taille des paquets échangés avec le serveur.
+
 
