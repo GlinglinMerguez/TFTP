@@ -28,7 +28,7 @@ Ce projet vise à créer un client capable d'échanger des fichiers en utilisant
 ### Question 4 : Création de la fonction gettftp ###
 
 **Explication :**
-1) Construction et envoi de la requête
+1) Construction et envoi de la requête de lecture (RRQ)
     - Le programme construit un paquet de requête de lecture (RRQ) formé avec l'opcode approprié et envoie ce paquet au serveur en utilisant la fonction "sendto". Le paquet contient le nom du fichier et le mode de transfert.
 2) Réception des données et écriture des données dans un fichier
     - Le programme attend la réponse du serveur en utilisant la fonction "recvfrom" pour recevoir le paquet de données et son acquittement. Les données du fichier sont reçues du serveur sous forme de paquets.
@@ -38,5 +38,14 @@ Ce projet vise à créer un client capable d'échanger des fichiers en utilisant
     - En cas d'erreur à n'importe quelle étape du processus, le programme affiche un message d'erreur, ferme le socket, libère la mémoire utilisée pour les informations d'adresse ("freeaddrinfo), et se termine.
 
 ### Question 5 : Création de la fonction puttftp ##
+
+**Explication :**
+1) Construction et envoi de la requête d'écriture (WRQ)
+   - De même que la requête de lecture, le programme construit un paquet de requête d'écriture (WRQ) avec l'opcode approprié et envoie ce paquet au serveur en utilisant la fonction "sendto". Le paquet contient le nom du ficheir et le mode de transfert.
+2) Envoi des données et réception des acquittements. 
+   - À la place de recevoir des données comme la RRQ, le programme lit les données du fichier à envoyer, les encapsule dans des paquets de données (DAT) avec un numéro de de bloc approprié, puis le programme les envoie au serveur.
+   - Le programme attend ensuite l'acquittement (ACK) de la part du serveur pour chaque paquet envoyé.
+3) Gestion des erreurs et nettoyage
+   - De même que celle de gettftp.
 
 
