@@ -6,15 +6,14 @@ Ce projet vise à créer un client capable d'échanger des fichiers en utilisant
 
 - Ce projet est développé par Léo APPOURCHAUX et Yumeng YE.
 - Le code est hébergé sur Github, avec un référentiel public
-- Chaque question a un fichier séparé.
 
-### Question 1 : Gestion des arguments de la ligne de commande
+### Question 1 : Gestion des arguments de la ligne de commande ###
 
 **Explication :**
 - Le programme commence par vérifier le nombre d'arguments passés à la ligne de commande. S'il n'y pas exactement 3 arguments (nom du programme, hôte, fichier), il affiche un message d'erreur et se termine.
 - Sinon, il continue avec le traitement.
 
-### Question 2 : Obtention de l'adresse du serveur
+### Question 2 : Obtention de l'adresse du serveur ###
 
 **Explication :**
 - Une structure "addrinfo" est initialisée pour spécifier les critères lors de la recherche d'adresses. Cette structure est remplie avec des informations telles que la famille d'adresses (IPv4 qu'on cherche ici) et le type de socket (UDP).
