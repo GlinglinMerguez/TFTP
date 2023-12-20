@@ -14,7 +14,6 @@
 #define SEND_ERROR "Error sending data"
 #define RECEIVE_ERROR "Error receiving data"
 
-#define MAX_BUFFER_SIZE 516
 #define WRQ_MODE "octet"
 #define DATA_OPCODE 3
 #define ACK_OPCODE 4
@@ -50,8 +49,11 @@ void main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
+    // Q6 - Block size
+    int block_size = atoi(argv[4]);
+
     // Build WRQ packet
-    char wrq_buffer[MAX_BUFFER_SIZE];
+    char wrq_buffer[block_size];
     wrq_buffer[0] = 0x00;  // Opcode (2 bytes)
     wrq_buffer[1] = 0x02;
     memcpy(wrq_buffer + 2, argv[3], strlen(argv[3]));  // Filename
@@ -69,7 +71,7 @@ void main(int argc, char** argv) {
     }
 
     // Send Data
-    char data_buffer[MAX_BUFFER_SIZE];
+    char data_buffer[block_size];
     int block_number = 0;  // Initial block number
 
     // Opening or Creating the File
@@ -83,7 +85,7 @@ void main(int argc, char** argv) {
 
     // While there's still Data
     ssize_t read_length;
-    while ((read_length = read(fd, data_buffer + 4, MAX_BUFFER_SIZE - 4)) > 0) {
+    while ((read_length = read(fd, data_buffer + 4, block_size - 4)) > 0) {
 
         // Opcode
         data_buffer[0] = 0x00;

@@ -14,16 +14,16 @@
 #define SEND_ERROR "Error sending data"
 #define RECEIVE_ERROR "Error receiving data"
 
-#define MAX_BUFFER_SIZE 516
 #define RRQ_MODE "octet"
 #define DATA_OPCODE 3
 #define ACK_OPCODE 4
 
 
 void main(int argc, char** argv) {
+    // Address, Port, FileName, BlockSize
 
     // Q1 - Argument count test
-    if (argc != 4) {
+    if (argc != 5) {
         printf(ARGUMENTS_ERROR);
         exit(EXIT_FAILURE);
     }
@@ -50,8 +50,11 @@ void main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
+    // Q6 - Block size
+    int block_size = atoi(argv[4]);
+
     // Q4a - Build RRQ packet
-    char rrq_buffer[MAX_BUFFER_SIZE];
+    char rrq_buffer[block_size];
     rrq_buffer[0] = 0x00;  // Opcode (2 bytes)
     rrq_buffer[1] = 0x01;
     memcpy(rrq_buffer + 2, argv[3], strlen(argv[3]));  // Filename
@@ -69,7 +72,7 @@ void main(int argc, char** argv) {
     }
 
     // Q4b - Receive Data
-    char data_buffer[MAX_BUFFER_SIZE];
+    char data_buffer[block_size];
     int block_number = 1;  // Initial block number
 
     // Q4c - Multiple Packets
@@ -84,7 +87,7 @@ void main(int argc, char** argv) {
 
     // If there's still Data
     while(1) {
-        ssize_t recv_length = recvfrom(sockfd, data_buffer, MAX_BUFFER_SIZE, 0, res->ai_addr, &res->ai_addrlen);
+        ssize_t recv_length = recvfrom(sockfd, data_buffer, block_size, 0, res->ai_addr, &res->ai_addrlen);
         if (recv_length == -1) {
             perror(RECEIVE_ERROR);
             close(sockfd);
@@ -115,7 +118,7 @@ void main(int argc, char** argv) {
                 block_number++;
 
                 // Check if it's the last data block
-                if (recv_length < MAX_BUFFER_SIZE) {
+                if (recv_length < block_size) {
                     break;
                 }
             }
