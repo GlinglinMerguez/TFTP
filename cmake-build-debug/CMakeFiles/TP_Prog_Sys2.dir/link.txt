@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/TP_Prog_Sys2.dir/gettftp.c.o CMakeFiles/TP_Prog_Sys2.dir/puttftp.c.o -o TP_Prog_Sys2 

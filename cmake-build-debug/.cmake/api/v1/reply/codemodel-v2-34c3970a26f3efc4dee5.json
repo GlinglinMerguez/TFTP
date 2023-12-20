@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/ensea/CLionProjects/TFTP/cmake-build-debug",
-		"source" : "/home/ensea/CLionProjects/TFTP"
+		"build" : "/home/ensea/CLionProjects/TFTP2/cmake-build-debug",
+		"source" : "/home/ensea/CLionProjects/TFTP2"
 	},
 	"version" : 
 	{

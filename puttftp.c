@@ -73,7 +73,7 @@ void main(int argc, char** argv) {
     int block_number = 0;  // Initial block number
 
     // Opening or Creating the File
-    int fd = open(argv[3], O_RDONLY);
+    int fd = open(argv[3], O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
     if (fd == -1) {
         perror("Error opening file");
         close(sockfd);
