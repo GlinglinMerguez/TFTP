@@ -20,6 +20,7 @@
 
 
 void main(int argc, char** argv) {
+    // Address, Port, FileName, BlockSize
 
     // Argument count test
     if (argc != 4) {
